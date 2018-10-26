@@ -24,6 +24,9 @@ module.exports = {
         ]
     },
     devServer: {
+        allowedHosts: [
+            '.ngrok.io'
+        ],
         inline: false,
         hot: false,
         hotOnly: false,

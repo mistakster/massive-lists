@@ -1,5 +1,28 @@
 import range from 'ramda/es/range';
 import flatten from 'ramda/es/flatten';
+import groupBy from 'ramda/es/groupBy';
+
+function getLogger() {
+    const logger = document.getElementById('logger');
+
+    if (logger) {
+        return logger;
+    }
+
+    const container = document.createElement('pre');
+
+    container.setAttribute('id', 'logger');
+
+    document.body.insertBefore(container, document.body.firstChild);
+
+    return container;
+}
+
+function log(msg) {
+    const logger = getLogger();
+
+    logger.appendChild(document.createTextNode(msg + '\n'));
+}
 
 function mark(name) {
     return data => {
@@ -20,7 +43,7 @@ function measure(name, startMark, endMark) {
 function printMeasures() {
     performance.getEntriesByType('measure')
         .forEach(entry => {
-            console.log(`${entry.name} — ${entry.duration.toFixed(2)}ms`);
+            log(`${entry.name} — ${entry.duration.toFixed(2)}ms`);
         });
 }
 
@@ -45,14 +68,16 @@ Promise.resolve()
     .then(loadFiles)
     .then(mark('load-end'))
     .then(mark('flatten-start'))
-    .then(simpleFlatten)
+    .then(flatten)
     .then(mark('flatten-end'))
     .then(mark('processing-start'))
-    .then(data => {
-        console.log(data.length);
-        return data.map(d => d.id)
-    })
+    .then(groupBy(u => u.address.city))
     .then(mark('processing-end'))
+    .then(data => {
+        const cities = Object.keys(data);
+
+        log(`${cities.length} unique cities`);
+    })
     .then(measure('flatten', 'flatten-start', 'flatten-end'))
     .then(measure('load', 'load-start', 'load-end'))
     .then(measure('processing', 'processing-start', 'processing-end'))
