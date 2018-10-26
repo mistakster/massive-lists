@@ -1,0 +1,26 @@
+{
+  "name": "massive-lists",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "immutable": "^3.8.2",
+    "mocker-data-generator": "^2.6.6",
+    "ramda": "^0.25.0",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.4",
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
