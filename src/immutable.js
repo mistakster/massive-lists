@@ -64,6 +64,18 @@ function groupByCity(data) {
     return data.groupBy(d => d.get('address').get('city'));
 }
 
+function combineAddress(data) {
+    return data.map(d => d.update(
+        'address',
+        addr => ([
+            addr.get('zipCode'),
+            addr.get('country'),
+            addr.get('city'),
+            addr.get('streetAddress')
+        ].join(', '))
+    ));
+}
+
 Promise.resolve()
     .then(mark('load-start'))
     .then(loadFiles)
@@ -71,15 +83,21 @@ Promise.resolve()
     .then(mark('flatten-start'))
     .then(flatten)
     .then(mark('flatten-end'))
-    .then(mark('processing-start'))
-    .then(groupByCity)
-    .then(mark('processing-end'))
     .then(data => {
-        const cities = data.keys();
-
-        log(`${cities.size} unique cities`);
+        return Promise.resolve(data)
+            .then(mark('processing-start'))
+            .then(groupByCity)
+            .then(mark('processing-end'))
+            .then(data => {
+                log(`${data.size} unique cities`);
+            })
+            .then(() => data);
     })
+    .then(mark('combine-start'))
+    .then(combineAddress)
+    .then(mark('combine-end'))
     .then(measure('flatten', 'flatten-start', 'flatten-end'))
     .then(measure('load', 'load-start', 'load-end'))
     .then(measure('processing', 'processing-start', 'processing-end'))
+    .then(measure('combine address', 'combine-start', 'combine-end'))
     .then(printMeasures);
