@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
     mode: 'development',
     entry: {
+        'immutable': './src/immutable.js',
         'raw': './src/raw.js'
     },
     output: {
