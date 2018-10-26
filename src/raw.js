@@ -33,18 +33,22 @@ function combineAddress(addr) {
 
 function combineAddressLens(data) {
     const addressLens = lensProp('address');
-    const addressMapper = partial(over, [addressLens, combineAddress]);
+    // const addressMapper = partial(over, [addressLens, combineAddress]);
 
-    return data.map(addressMapper);
+    return data.map(d => over(addressLens, combineAddress, d));
 }
 
 function combineAddressSimple(data) {
-    return data.map(d => {
-        return {
-            ...d,
-            address: combineAddress(d.address)
+    const results = Array(data.length);
+
+    for (let i = data.length - 1; i >= 0; i--) {
+        results[i] = {
+            ...data[i],
+            address: combineAddress(data[i].address)
         };
-    });
+    }
+
+    return results;
 }
 
 Promise.resolve()
@@ -67,7 +71,7 @@ Promise.resolve()
             .then(() => data);
     })
     .then(mark('combine-start'))
-    .then(combineAddressLens)
+    .then(combineAddressSimple)
     .then(mark('combine-end'))
     .then(measure('flatten', 'flatten-start', 'flatten-end'))
     .then(measure('load', 'load-start', 'load-end'))
