@@ -13,6 +13,7 @@
   "dependencies": {
     "immutable": "^3.8.2",
     "mocker-data-generator": "^2.6.6",
+    "mustache": "^3.0.0",
     "ramda": "^0.25.0",
     "webpack-dev-server": "^3.1.10"
   },

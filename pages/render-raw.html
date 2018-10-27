@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Raw data</title>
+    <style>
+        .actions {
+            margin-bottom: 1em;
+        }
+
+        .user {
+            width: 50%;
+            padding-right: 3em;
+            box-sizing: border-box;
+            margin-bottom: 1em;
+            max-height: 5em;
+            overflow: hidden;
+            transition: height 0.5s;
+        }
+
+        .user_hidden {
+            max-height: 1em;
+        }
+
+        .user > * {
+            margin: 0;
+        }
+
+        .country__title {
+            margin: 0 0 1em;
+        }
+
+        .country__users {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .country + .country {
+            margin-top: 2em;
+        }
+    </style>
+</head>
+<body>
+    <script src="/_/render-raw.js"></script>
+</body>
+</html>

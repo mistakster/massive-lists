@@ -4,7 +4,8 @@ module.exports = {
     mode: 'development',
     entry: {
         'immutable': './src/immutable.js',
-        'raw': './src/raw.js'
+        'raw': './src/raw.js',
+        'render-raw': './src/render-raw.js'
     },
     output: {
         path: path.resolve(__dirname, '_'),
