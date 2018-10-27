@@ -2,6 +2,7 @@ import mustache from 'mustache';
 import range from 'ramda/es/range';
 import forEach from 'ramda/es/forEach';
 import map from 'ramda/es/map';
+import filter from 'ramda/es/filter';
 import flatten from 'ramda/es/flatten';
 import groupBy from 'ramda/es/groupBy';
 import lensProp from 'ramda/es/lensProp';
@@ -42,9 +43,6 @@ const sortByUpdated = sortBy(prop('updatedAt'));
 
 function render(data) {
     const template = `
-    <div class="actions">
-        <button class="js-toggle">Toggle cards</button>
-    </div>
 {{#data}}
     <div class="country">
         <h3 class="country__title">{{ 0 }}</h3>    
@@ -61,22 +59,13 @@ function render(data) {
 {{/data}}    
 `;
 
-    const container = document.createElement('div');
+    const container = document.querySelector('.js-list');
 
     container.innerHTML = mustache.render(template, {
         data: toPairs(data)
     });
 
-    document.body.insertBefore(container, document.body.firstChild);
-
-    document
-        .querySelector('.js-toggle')
-        .addEventListener('click', () => {
-            forEach(
-                u => u.classList.toggle('user_hidden'),
-                document.querySelectorAll('.user')
-            );
-        });
+    return data;
 }
 
 Promise.resolve()
@@ -88,4 +77,42 @@ Promise.resolve()
     .then(render)
     .then(mark('render-end'))
     .then(measure('render', 'render-start', 'render-end'))
-    .then(printMeasures);
+    .then(data => {
+        document
+            .querySelector('.js-toggle')
+            .addEventListener('click', () => {
+                forEach(
+                    u => u.classList.toggle('user_hidden'),
+                    document.querySelectorAll('.user')
+                );
+            });
+
+        document
+            .querySelector('.js-filter')
+            .addEventListener('keyup', (e) => {
+                const value = e.currentTarget.value.toLowerCase();
+
+                function matchUser(v) {
+                    return user => {
+                        if (!v) {
+                            return true;
+                        }
+
+                        return (
+                            user.firstName.toLowerCase().indexOf(v) === 0 ||
+                            user.lastName.toLowerCase().indexOf(v) === 0
+                        );
+                    };
+                }
+
+                const filteredData = filter(
+                    g => g.length,
+                    map(
+                        c => filter(matchUser(value), c),
+                        data
+                    )
+                );
+
+                render(filteredData);
+            });
+    });

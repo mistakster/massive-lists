@@ -25,6 +25,7 @@ module.exports = {
             }
         ]
     },
+    devtool: 'source-map',
     devServer: {
         allowedHosts: [
             '.ngrok.io'

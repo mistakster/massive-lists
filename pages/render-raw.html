@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>Raw data</title>
     <style>
+        body {
+            font-size: 16px;
+            line-height: 1.25;
+        }
+
         .actions {
             margin-bottom: 1em;
         }
@@ -15,11 +20,11 @@
             margin-bottom: 1em;
             max-height: 5em;
             overflow: hidden;
-            transition: height 0.5s;
+            transition: max-height 0.5s;
         }
 
         .user_hidden {
-            max-height: 1em;
+            max-height: 1.25em;
         }
 
         .user > * {
@@ -41,6 +46,16 @@
     </style>
 </head>
 <body>
+    <div class="actions">
+        <button class="js-toggle">Toggle cards</button>
+        &nbsp;
+        &nbsp;
+        <label>
+            Filter:
+            <input class="js-filter" type="text">
+        </label>
+    </div>
+    <div class="js-list"></div>
     <script src="/_/render-raw.js"></script>
 </body>
 </html>
