@@ -17,7 +17,11 @@ function flatten(data) {
 }
 
 function groupByCity(data) {
-    return data.groupBy(d => d.get('address').get('city'));
+    return data.groupBy(d => d.get('address').get('country'));
+}
+
+function sortByUpdated(data) {
+    return data.map(list => list.sortBy(user => user.get('updatedAt')));
 }
 
 function combineAddress(data) {
@@ -43,9 +47,10 @@ Promise.resolve()
         return Promise.resolve(data)
             .then(mark('processing-start'))
             .then(groupByCity)
+            .then(sortByUpdated)
             .then(mark('processing-end'))
             .then(data => {
-                log(`${data.size} unique cities`);
+                log(`${data.size} unique countries`);
             })
             .then(() => data);
     })

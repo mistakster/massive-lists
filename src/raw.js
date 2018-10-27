@@ -1,9 +1,12 @@
 import range from 'ramda/es/range';
+import map from 'ramda/es/map';
 import flatten from 'ramda/es/flatten';
 import groupBy from 'ramda/es/groupBy';
 import lensProp from 'ramda/es/lensProp';
 import over from 'ramda/es/over';
 import partial from 'ramda/es/partial';
+import prop from 'ramda/es/prop';
+import sortBy from 'ramda/es/sortBy';
 import { mark, measure, printMeasures, log } from './utils';
 
 function loadFiles() {
@@ -59,14 +62,15 @@ Promise.resolve()
     .then(flatten)
     .then(mark('flatten-end'))
     .then(data => {
+        const sortByUpdated = sortBy(prop('updatedAt'));
+
         return Promise.resolve(data)
             .then(mark('processing-start'))
-            .then(groupBy(u => u.address.city))
+            .then(groupBy(u => u.address.country))
+            .then(map(sortByUpdated))
             .then(mark('processing-end'))
             .then(data => {
-                const cities = Object.keys(data);
-
-                log(`${cities.length} unique cities`);
+                log(`${Object.keys(data).length} unique countries`);
             })
             .then(() => data);
     })
