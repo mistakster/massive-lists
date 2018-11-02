@@ -313,24 +313,32 @@
     <h2>Эксперимернт №1</h2>
     <ul>
         <li>чистый JS + Ramda</li>
-        <li>10 запросов</li>
-        <li>10&#8201;000 карточек в каждом</li>
-        <li>суммарный объём данных = 29Мб</li>
+        <li>10 запросов, 100&#8201;000 карточек в каждом</li>
+        <li>суммарный объём данных = 301Мб</li>
+        <li>плоский список нужно сгруппировать по странам,<br>
+            отсортировать карточки в группе по дате обновления и<br>
+            склеить адрес в одну строку
+        </li>
     </ul>
 </section>
 
-<section class="slide clear">
-    <video autoplay loop controls class="cover w">
-        <source src="img/clips/simple-flatten.mov" type="video/mp4">
-    </video>
+<section class="slide">
+    <h2>
+        Результаты измерений
+    </h2>
+    <ul>
+        <li>объединение массивов — 0.18с</li>
+        <li>группировка и сортировка — 3.9с</li>
+        <li>склеивание полей адреса — 3.2с</li>
+    </ul>
 </section>
 
 <section class="slide">
-    <h2>Эксперимернт №1</h2>
+    <h2>Эксперимернт №2</h2>
     <ul>
-        <li>сгруппируем данные по стране — 244 уникальных значений</li>
-        <li>отсортируем каждую группу по полю <strong>updatedAt</strong></li>
-        <li>склеим поля адреса в одну строку</li>
+        <li>чистый JS + Ramda</li>
+        <li>10 запросов, 10&#8201;000 карточек в каждом</li>
+        <li>суммарный объём данных = 29Мб</li>
     </ul>
 </section>
 
@@ -341,33 +349,10 @@
 </section>
 
 <section class="slide">
-    <h2>Эксперимернт №2</h2>
-    <ul>
-        <li>чистый JS + Ramda</li>
-        <li>10 запросов</li>
-        <li>100&#8201;000 карточек в каждом</li>
-        <li>суммарный объём данных = 301Мб</li>
-    </ul>
-</section>
-
-<section class="slide">
-    <h2>
-        Результаты измерений
-    </h2>
-    <ul>
-        <li>объединение массивов — 0.176с</li>
-        <li>группировка и сортировка — 4.5с</li>
-        <li>склеивание полей адреса — 5.1с</li>
-    </ul>
-</section>
-
-<section class="slide">
     <h2>Эксперимернт №3</h2>
     <ul>
         <li>Immutable.JS</li>
-        <li>10 запросов</li>
-        <li>10&#8201;000 карточек в каждом</li>
-        <li>суммарный объём данных = 29Мб</li>
+        <li>10 запросов, 10&#8201;000 карточек в каждом</li>
     </ul>
 </section>
 
@@ -387,6 +372,17 @@
 <section class="slide">
     <h2>Эксперимент №4</h2>
     <ul>
+        <li>Рисуем 100&#8201;000 карточек</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <img src="img/1e5-cards.png" class="cover w h">
+</section>
+
+<section class="slide">
+    <h2>Эксперимент №5</h2>
+    <ul>
         <li>10&#8201;000 карточек</li>
     </ul>
 </section>
@@ -398,7 +394,7 @@
 </section>
 
 <section class="slide">
-    <img src="img/1e5-cards.png" class="cover w h">
+
 </section>
 
 <footer class="badge">
